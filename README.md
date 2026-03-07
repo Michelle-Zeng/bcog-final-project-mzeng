@@ -5,9 +5,10 @@ Final project for bcog200
 
 If time permits, I will use the previously described project as a parent class and build a child class for chore time management that inherits the functions/variables.
 
-2a. **add_tasks** will take in user input (assignment name, diffculty ranking) and store the values in a dictionary
-2b. **calculate_time** will take in user input (amount of time to work) and store to global variable
-2c. **calculate_breaks** will take in the created dictionary and total time variable to calculate breaks
+2. functions
+a. **add_tasks** will take in user input (assignment name, diffculty ranking) and store the values in a dictionary
+b. **calculate_time** will take in user input (amount of time to work) and store to global variable
+c. **calculate_breaks** will take in the created dictionary and total time variable to calculate breaks
 Ex. Time for assignment = difficulty ranking * 10 * factor, Break after assignment = (5 + difficulty ranking) * factor, Factor = (total time needed)/(total time allowed)
 
 3. Individual projcet, Michelle Zeng, Github = Michelle-Zeng
