@@ -5,6 +5,10 @@ Final project for bcog200
 
 If time permits, I will use the previously described project as a parent class and build a child class for chore time management that inherits the functions/variables.
 
+Sales Pitch:
+- Have you ever felt like you spend hours doing one task, but it doesn't feel like much progress was made? You sit in front of your computer slaving away at homework after homework but never truly finish anything until the last minute? Have the stress of deadlines only kicked in the night before, leaving you frantically working to submit sub-par assignments?
+- Look no further than the Time Manager, a simple and easy-to-use program to schedule your time that way you finish all your assignments in a timely manner! 
+
 2. functions
 
 a. **add_tasks** will take in user input (assignment name, diffculty ranking) and store the values in a dictionary
