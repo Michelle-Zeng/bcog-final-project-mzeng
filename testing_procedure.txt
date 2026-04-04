@@ -1,0 +1,8 @@
+Testing Procedure for Time Manager
+
+Test 1: empty assignment name
+
+Test 2: empty difficulty ranking
+
+Test 3: 0 time to study
+
