@@ -1,8 +1,28 @@
-Testing Procedure for Time Manager
+RUN THE PROGRAM:
+From the terminal, go to the correct folder containing run_experiment.py, SRC folder, and config folder. Use the line uv run run_experiment.py. The program will open a separate window where the user can interact with entry boxes, buttons, etc. 
 
-Test 1: empty assignment name
+TEST TO RUN:
+Test 1: add tasks and difficulty
 
-Test 2: empty difficulty ranking
+Test 2: add total study time
 
-Test 3: 0 time to study
+Test 3: add multiple tasks and verify correct equations
 
+    Assignment 1: "Math HW 1"   difficulty 5
+    Assignment 2: "CS HW 1"    difficulty 1
+
+    Total study time available: 60 minutes
+
+These two assignments should result in a time distribution of:
+    Assignment 1: study 50 min, break 10 mins
+    Assignment 2: study 10 mins, break 6 mins
+
+Test 4: attempt to add task with empty name (no text entry)
+
+Test 5: attempt to add another task with the same name
+
+Test 6: attempt to generate schedule with no tasks added
+
+Test 7: attempt to generate schedule with tasks but invalid total time (0 mins)
+
+Test 8: clear button should remove all tasks from list and reset schedule
