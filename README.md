@@ -1,7 +1,8 @@
 # time-manager
 
 ## **Sales Pitch**:
-> Have you ever felt like you spend hours doing one task, but it doesn't feel like much progress was made? You sit in front of your computer slaving away at homework after homework but never truly finish anything until the last minute? Have the stress of deadlines only kicked in the night before, leaving you frantically working to submit sub-par assignments?
+> Have you ever felt like you spend hours doing one task, but it doesn't feel like much progress was made? You sit in front of your computer slaving away at homework after homework but never truly finish anything until the last minute? Have the stress of deadlines only kicked in the night before, leaving you frantically working to submit sub-par assignments?  
+
 > Look no further than the Time Manager, a simple and easy-to-use program to schedule your time that way you finish all your assignments in a timely manner! 
 
 
