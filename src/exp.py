@@ -23,7 +23,7 @@ class Exp:
             total_time (int): total uninterrupted minutes available
         Returns:
             schedule (list of dict): the calculated schedule
-            temp
+            
         """
         pass
       
