@@ -9,7 +9,8 @@
 ## **Overview**:
 - My final project will be a time manager to help figure out how much time to spend on assignments, while scheduling in breaks. Similar to the Pomodoro technique, my project will calculate how much time to spend on certain assignments given their difficulty while considering how much time is available to work. The amount of time given for each break and when each break is given will be calculated with an equation I will create. The project will take in assignment names ("BCOG200 homework 1" or "MSE404 Lab Report"), estimated difficulty (from 1-5), and amount of uninterrupted study time available to finish given assignments in minutes as user inputs.
 
-If time permits, I will use the previously described project as a parent class and build a child class for chore time management that inherits the functions/variables.
+If time permits, I will use the previously described project as a parent class and build a child class for chore time management that inherits the functions/variables.   
+TESTING
 
 
 ## **Functions**:
