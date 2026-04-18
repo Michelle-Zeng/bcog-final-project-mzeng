@@ -2,9 +2,9 @@
 
 import tkinter as tk
 from tkinter import ttk, messagebox
-import time
 from config.config import Config
-import math
+
+from src.exp import Exp
 
 
 class Gui:
@@ -21,13 +21,31 @@ class Gui:
         """
         Tkinter window and sections
         """
-        pass
+        self.exp = Exp(self)
+
+        self.root = None
+        self.task_entry = None
+        self.difficulty_entry = None
+        self.time_entry = None
+        self.task_count_label = None
+        self.task_list = None
+        self.schedule = None
+
+        self.create_window()
+        self.create_header()
+        self.create_main()
+        self.create_time()
+        self.create_schedule()
 
     def create_window(self):
         """
         Creates Tk window (title, size, background, ttk styles).
         """
-        pass
+        self.root = tk.Tk()
+        self.root.geometry("{}x{}".format(Config.window_width, Config.window_height))
+        self.root.title("Time Manager")
+        self.root.configure(bg=Config.bg_color)
+        self.root.resizable(False, False)
 
     def create_header(self):
         """
