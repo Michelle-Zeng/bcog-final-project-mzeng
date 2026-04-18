@@ -47,6 +47,24 @@ class Gui:
         self.root.configure(bg=Config.bg_color)
         self.root.resizable(False, False)
 
+        style = ttk.Style()
+        style.configure(
+            "TButton",
+            background=Config.button_color,
+            foreground="white",
+            font=Config.font_normal,
+        )
+        style.map("TButton", background=Config)
+
+        style.configure(
+            "TLabel",
+            background=Config.bg_color,
+            foreground=Config.text_color,
+            font=Config.font_normal,
+        )
+        style.configure("TFrame", )
+
+
     def create_header(self):
         """
         Header bar with title and labels
