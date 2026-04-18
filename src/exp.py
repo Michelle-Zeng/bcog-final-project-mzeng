@@ -1,5 +1,6 @@
 # inside project/src folder
 
+import math
 from config.config import Config
 
 
@@ -73,8 +74,28 @@ class Exp:
 
         schedule = []
         for name, difficulty in tasks.items():
-            study_time = math.ceil()
-            break_time = math.ceil()
+            study_time = math.ceil((difficulty * 10) / factor)
+            break_time = math.ceil((difficulty + 5) / factor)
+            schedule.append({
+                    "assignment": name,
+                    "difficulty": difficulty,
+                    "study_time": study_time,
+                    "break_time": break_time,
+            })
+
+        return schedule
+
+    def get_task_count(self):
+        return len(self.tasks)
+    
+    def get_tasks(self):
+        return dict(self.tasks)
+    
+    def remove_tasks(self, name):
+        name = name.strip()
+        if name not in self.tasks:
+            return 'Task "{name}" not found'
+        del self.tasks(name)
 
 
 # if possible:
