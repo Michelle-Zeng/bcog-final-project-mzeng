@@ -35,3 +35,5 @@ test
 - Week 8-9: build class and function headers, write documentation for each function
 - Week 10-12: code at least 3 functions, include more if needed
 - Week 13-15: finalize code, improve user interface
+
+testing
