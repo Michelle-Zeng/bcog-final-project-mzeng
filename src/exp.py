@@ -64,18 +64,17 @@ class Exp:
         """
         """
         Formuals used to calculate time:
-            total_time_needed = sum of (difficulty * 10) for all tasks
-            factor            = total_time_needed / total_time
-            study_time        = difficulty * 10 / factor
-            break_time        = (5 + difficulty) / factor
+            total_time_needed --> study 80%, break 20%
+            study/break calculated by ratio of difficulty 
         """
-        total_time_needed = sum(d * 10 for d in tasks.values())
-        factor = total_time_needed / total_time
+        study_total = total_time * 0.80
+        break_total = total_time * 0.20
+        total_difficulty = sum(tasks.values())
 
         schedule = []
         for name, difficulty in tasks.items():
-            study_time = math.ceil((difficulty * 10) / factor)
-            break_time = math.ceil((difficulty + 5) / factor)
+            study_time = math.floor((difficulty / total_difficulty) * study_total)
+            break_time = math.floor((difficulty / total_difficulty) * break_total)
             schedule.append(
                 {
                     "assignment": name,
