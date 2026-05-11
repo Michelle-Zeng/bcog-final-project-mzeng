@@ -22,7 +22,7 @@ class Exp:
         if not name:
             return "Task name cannot be empty"
         if name in self.tasks:
-            return 'Task names "{name}" already exists'
+            return f'Task name "{name}" already exists'
         if not isinstance(difficulty, int) or not (1 <= difficulty <= 5):
             return "Difficulty must be an integer between 1 and 5"
         self.tasks[name] = difficulty
@@ -76,26 +76,28 @@ class Exp:
         for name, difficulty in tasks.items():
             study_time = math.ceil((difficulty * 10) / factor)
             break_time = math.ceil((difficulty + 5) / factor)
-            schedule.append({
+            schedule.append(
+                {
                     "assignment": name,
                     "difficulty": difficulty,
                     "study_time": study_time,
                     "break_time": break_time,
-            })
+                }
+            )
 
         return schedule
 
     def get_task_count(self):
         return len(self.tasks)
-    
+
     def get_tasks(self):
         return dict(self.tasks)
-    
+
     def remove_tasks(self, name):
         name = name.strip()
         if name not in self.tasks:
-            return 'Task "{name}" not found'
-        del self.tasks(name)
+            return f'Task "{name}" not found'
+        del self.tasks[name]
 
 
 # if possible:
