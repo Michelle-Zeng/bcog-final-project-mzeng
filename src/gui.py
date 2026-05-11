@@ -342,22 +342,56 @@ class Gui:
         """
         when user clicks add button, read from assignment name and difficulty entry
         """
-        pass
+        name = self.name_entry.get()
+        difficulty = self.difficulty_var.get()
+
+        error = self.exp.add_task(name, difficulty)
+        if error:
+            messagebox.showerror("Invalid Input", error)
+            return
+
+        stars = "★" * difficulty + "☆" * (5 - difficulty)
+        self.task_listbox.insert(tk.END, f"  {name}  [{stars}]  diff {difficulty}")
+
+        self.update_task_count()
+
+        self.name_entry.delete(0, tk.END)
+        self.difficulty_var.set(3)
+        self.name_entry.focus()
 
     def clear_button(self):
         """
         when user clicks clear button from task list, reset all sections
         """
-        pass
+        self.exp.clear()
+        self.task_listbox.delete(0, tk.END)
+        self.update_task_count()
+        self.time_entry.delete(0, tk.END)
+        self._set_results_text("Your schedule will appear here after you add tasks.")
 
     def schedule_button(self):
         """
         when user clicks generate schedule button, read from total time and use exp formulas
         """
-        pass
+        time = self.time_entry.get().strip()
+        try:
+            total_time = int(time)
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Total time must be a whole number.")
+            return
+
+        result = self.exp.run(total_time)
+
+        if isinstance(result, str):
+            messagebox.showerror("Error", result)
+            return
+
+        self.display_schedule(result)
 
     def update_task_count(self):
         """
         Update the task count label in task list section
         """
-        pass
+        count = self.exp.get_task_count()
+        noun = "task" if count == 1 else "tasks"
+        self.task_count_label.config(text=f"Tasks added: {count} {noun}")
