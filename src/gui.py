@@ -62,44 +62,281 @@ class Gui:
             foreground=Config.text_color,
             font=Config.font_normal,
         )
-        style.configure("TFrame", )
-
+        style.configure(
+            "TFrame",
+        )
 
     def create_header(self):
         """
         Header bar with title and labels
         """
-        pass
+        header = tk.Frame(self.root, bg=Config.header_color, height=60)
+
+        title = tk.Label(
+            header,
+            text=" * TIME MANAGER * ",
+            font=Config.font_title,
+            bg=Config.header_color,
+            fg="blue",
+        )
+        title.pack(side=tk.LEFT, padx=20, pady=10)
+
+        subtitle = tk.Label(
+            header,
+            text="Schedule your study time!",
+            font=Config.font_small,
+            bg=Config.header_color,
+            fg="blue",
+        )
+        subtitle.pack(side=tk.LEFT, padx=5, pady=10)
 
     def create_main(self):
         """
         Creates the two-column layout (left with add assignment, right with task list)
         """
-        pass
+        main_window = tk.Frame(self.root, bg=Config.bg_color, height=300)
+        main_window.pack(fill=tk.X, padx=20, pady=15)
+        main_window.pack_propagate(False)
 
-    def create_left_task(self):
+        main_window.columnconfigure(0, weight=1)
+        main_window.columnconfigure(1, weight=1)
+        main_window.rowconfigure(0, weight=1)
+
+        left_window = tk.Frame(main_window, bg=Config.bg_color)
+        left_window.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
+
+        right_window = tk.Frame(main_window, bg=Config.bg_color)
+        right_window.grid(row=0, column=0, sticky="nsew", padx=(8, 0))
+
+        self.create_left_task(left_window)
+        self.create_right_task(right_window)
+
+    def create_left_task(self, parent=None):
         """
         Left: add assignment name and difficulty entry box --> add task button
         """
-        pass
+        if parent is None:
+            parent = self.root
+
+        section = tk.LabelFrame(
+            parent,
+            text=" * Add Assignment * ",
+            font=Config.font_bold,
+            bg=Config.bg_color,
+            fg="blue",
+            padx=15,
+            pady=10,
+        )
+        section.pack(fill=tk.BOTH, expand=True, ipady=4)
+
+        # assignment
+        tk.Label(
+            section,
+            text="Assignment Name:",
+            bg=Config.bg_color,
+            fg=Config.text_color,
+            font=Config.font_normal,
+        ).pack(anchor=tk.W, pady=(5, 2))
+        self.name_entry = ttk.Entry(section, width=35)
+        self.name_entry.pack(fill=tk.X, pady=(0, 10))
+
+        # diff score
+        tk.Label(
+            section,
+            text="Difficulty (1 = easy  →  5 = hard):",
+            bg=Config.bg_color,
+            fg=Config.text_color,
+            font=Config.font_normal,
+        ).pack(anchor=tk.W, pady=(0, 2))
+
+        diff_frame = tk.Frame(section, bg=Config.bg_color)
+        diff_frame.pack(fill=tk.X, pady=(0, 12))
+
+        self.difficulty_var = tk.IntVar(value=3)
+
+        for d in range(1, 6):
+            rb = tk.Radiobutton(
+                diff_frame,
+                text=str(d),
+                variable=self.difficulty_var,
+                value=d,
+                bg=Config.bg_color,
+                fg=Config.text_color,
+                selectcolor="blue",
+                font=Config.font_normal,
+                activebackground=Config.bg_color,
+            )
+            rb.pack(side=tk.LEFT, padx=6)
+
+        # buttons
+        add_btn = ttk.Button(section, text="➕  Add Task", command=self.add_task_button)
+        add_btn.pack(fill=tk.X, pady=(4, 0))
+
+        # testing enter key https://www.geeksforgeeks.org/python/how-to-bind-the-enter-key-to-a-tkinter-window/
+        self.name_entry.bind("<Return>", lambda e: self.add_task_button())
 
     def create_right_task(self):
         """
         Right: list of added tasks with name and difficulty
         """
-        pass
+        if parent is None:
+            parent = self.root
+
+        section = tk.LabelFrame(
+            parent,
+            text="  Task List  ",
+            font=Config.font_bold,
+            bg=Config.bg_color,
+            fg="blue",
+            # bd=2,
+            # relief=tk.GROOVE,
+            # padx=15,
+            # pady=10,
+        )
+        section.pack(fill=tk.BOTH, expand=True)
+
+        # count
+        self.task_count_label = tk.Label(
+            section,
+            text="Tasks added: 0",
+            bg=Config.bg_color,
+            fg=Config.text_color,
+            font=Config.font_small,
+        )
+        self.task_count_label.pack(anchor=tk.W, pady=(0, 5))
+
+        # all assignments
+        list_frame = tk.Frame(section, bg=Config.bg_color)
+        list_frame.pack(fill=tk.BOTH, expand=True)
+
+        scrollbar = tk.Scrollbar(list_frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        self.task_listbox = tk.Listbox(
+            list_frame,
+            yscrollcommand=scrollbar.set,
+            font=Config.font_small,
+            bg="#f9f9f9",
+            fg=Config.text_color,
+            selectbackground=Config.accent_color,
+            selectforeground="white",
+            relief=tk.FLAT,
+            highlightthickness=1,
+            highlightcolor=Config.accent_color,
+        )
+        self.task_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.config(command=self.task_listbox.yview)
+
+        # clear button
+        clear_btn = ttk.Button(section, text="🗑  Clear All", command=self.clear_button)
+        clear_btn.pack(fill=tk.X, pady=(8, 0))
 
     def create_time_done(self):
         """
         Add total study time entry box --> create schedule button
         """
-        pass
+        time_frame = tk.Frame(self.root, bg=Config.bg_color)
+        time_frame.pack(fill=tk.X, padx=20, pady=(0, 10))
 
-    def display_schedule(self):
+        section = tk.LabelFrame(
+            time_frame,
+            text=" * Total Study Time * ",
+            font=Config.font_bold,
+            bg=Config.bg_color,
+            fg="blue",
+            # bd=2,
+            # relief=tk.GROOVE,
+            # padx=15,
+            # pady=10,
+        )
+        section.pack(fill=tk.X)
+
+        row = tk.Frame(section, bg=Config.bg_color)
+        row.pack(fill=tk.X)
+
+        tk.Label(
+            row,
+            text="Available minutes:",
+            bg=Config.bg_color,
+            fg=Config.text_color,
+            font=Config.font_normal,
+        ).pack(side=tk.LEFT, padx=(0, 10))
+
+        self.time_entry = ttk.Entry(row, width=10)
+        self.time_entry.pack(side=tk.LEFT, padx=(0, 20))
+        self.time_entry.bind("<Return>", lambda e: self.schedule_button())
+
+        gen_btn = ttk.Button(
+            row, text="📅  Generate Schedule", command=self.schedule_button
+        )
+        gen_btn.pack(side=tk.LEFT)
+
+    def create_results(self):
         """
-        Display generated schedule using formulas in exp
+        Create schedule area
         """
-        pass
+        self.results_frame = tk.LabelFrame(
+            self.root,
+            text="  Schedule  ",
+            font=Config.font_bold,
+            bg=Config.bg_color,
+            fg=Config.accent_color,
+            # bd=2,
+            # relief=tk.GROOVE,
+            # padx=15,
+            # pady=10,
+        )
+        self.results_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=(0, 15))
+
+        scrollbar = tk.Scrollbar(self.results_frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        self.results_text = tk.Text(
+            self.results_frame,
+            yscrollcommand=scrollbar.set,
+            font=Config.font_normal,
+            bg="#f0f4f8",
+            fg=Config.text_color,
+            relief=tk.FLAT,
+            # state=tk.DISABLED,
+            wrap=tk.WORD,
+            padx=10,
+            pady=8,
+        )
+        self.results_text.pack(fill=tk.BOTH, expand=True)
+        scrollbar.config(command=self.results_text.yview)
+
+        # default text
+        self._set_results_text("Your schedule will appear here after you add tasks.")
+
+    def display_schedule(self, schedule):
+        """
+        Display generated schedule using formulas
+        """
+        lines = ["═-" * 25]
+        lines.append(f"{'ASSIGNMENT':<28} {'STUDY':>8} {'BREAK':>8}  DIFF")
+        lines.append("─" * 50)
+
+        total_study = 0
+        total_break = 0
+        for item in schedule:
+            name = item["assignment"]
+            if len(name) > 26:
+                name = name[:24] + ".."
+            study = item["study_time"]
+            break_time = item["break_time"]
+            diff = item["difficulty"]
+            total_study += study
+            total_break += break_time
+            visual = "█" * diff + "░" * (5 - diff)
+            lines.append(f"{name:<28} {study:>6} min {break_time:>6} min  {visual}")
+
+        lines.append("─" * 50)
+        lines.append(f"{'TOTALS':<28} {total_study:>6} min {total_break:>6} min")
+        lines.append("═" * 50)
+        lines.append("")
+
+        self._set_results_text("\n".join(lines))
 
     def add_task_button(self):
         """
