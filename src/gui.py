@@ -193,10 +193,6 @@ class Gui:
             font=Config.font_bold,
             bg=Config.bg_color,
             fg="#2c3e6b",
-            # bd=2,
-            # relief=tk.GROOVE,
-            # padx=15,
-            # pady=10,
         )
         section.pack(fill=tk.BOTH, expand=True)
 
@@ -249,10 +245,6 @@ class Gui:
             font=Config.font_bold,
             bg=Config.bg_color,
             fg="#2c3e6b",
-            # bd=2,
-            # relief=tk.GROOVE,
-            # padx=15,
-            # pady=10,
         )
         section.pack(fill=tk.X)
 
@@ -286,10 +278,6 @@ class Gui:
             font=Config.font_bold,
             bg=Config.bg_color,
             fg="#2c3e6b",
-            # bd=2,
-            # relief=tk.GROOVE,
-            # padx=15,
-            # pady=10,
         )
         self.results_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=(0, 15))
 
@@ -303,7 +291,6 @@ class Gui:
             bg="#f0f4f8",
             fg=Config.text_color,
             relief=tk.FLAT,
-            # state=tk.DISABLED,
             wrap=tk.WORD,
             padx=10,
             pady=8,
