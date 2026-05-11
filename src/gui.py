@@ -34,7 +34,7 @@ class Gui:
         self.create_window()
         self.create_header()
         self.create_main()
-        self.create_time()
+        self.create_time_done()
         self.create_schedule()
 
     def create_window(self):
@@ -51,10 +51,14 @@ class Gui:
         style.configure(
             "TButton",
             background=Config.button_color,
-            foreground="white",
+            foreground="#a8c4f0",
             font=Config.font_normal,
         )
-        style.map("TButton", background=Config)
+        style.map(
+            "TButton",
+            background=[("active", Config.button_color)],
+            foreground=[("active", "#2c3e6b")],
+        )
 
         style.configure(
             "TLabel",
@@ -71,13 +75,14 @@ class Gui:
         Header bar with title and labels
         """
         header = tk.Frame(self.root, bg=Config.header_color, height=60)
+        header.pack(fill=tk.X)
 
         title = tk.Label(
             header,
             text=" * TIME MANAGER * ",
             font=Config.font_title,
             bg=Config.header_color,
-            fg="blue",
+            fg="white",
         )
         title.pack(side=tk.LEFT, padx=20, pady=10)
 
@@ -86,7 +91,7 @@ class Gui:
             text="Schedule your study time!",
             font=Config.font_small,
             bg=Config.header_color,
-            fg="blue",
+            fg="white",
         )
         subtitle.pack(side=tk.LEFT, padx=5, pady=10)
 
@@ -106,7 +111,7 @@ class Gui:
         left_window.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
 
         right_window = tk.Frame(main_window, bg=Config.bg_color)
-        right_window.grid(row=0, column=0, sticky="nsew", padx=(8, 0))
+        right_window.grid(row=0, column=1, sticky="nsew", padx=(8, 0))
 
         self.create_left_task(left_window)
         self.create_right_task(right_window)
@@ -123,7 +128,7 @@ class Gui:
             text=" * Add Assignment * ",
             font=Config.font_bold,
             bg=Config.bg_color,
-            fg="blue",
+            fg="#2c3e6b",
             padx=15,
             pady=10,
         )
@@ -175,7 +180,7 @@ class Gui:
         # testing enter key https://www.geeksforgeeks.org/python/how-to-bind-the-enter-key-to-a-tkinter-window/
         self.name_entry.bind("<Return>", lambda e: self.add_task_button())
 
-    def create_right_task(self):
+    def create_right_task(self, parent=None):
         """
         Right: list of added tasks with name and difficulty
         """
@@ -184,10 +189,10 @@ class Gui:
 
         section = tk.LabelFrame(
             parent,
-            text="  Task List  ",
+            text=" * Task List * ",
             font=Config.font_bold,
             bg=Config.bg_color,
-            fg="blue",
+            fg="#2c3e6b",
             # bd=2,
             # relief=tk.GROOVE,
             # padx=15,
@@ -218,11 +223,11 @@ class Gui:
             font=Config.font_small,
             bg="#f9f9f9",
             fg=Config.text_color,
-            selectbackground=Config.accent_color,
+            selectbackground="#3a5fc8",
             selectforeground="white",
             relief=tk.FLAT,
             highlightthickness=1,
-            highlightcolor=Config.accent_color,
+            highlightcolor="#3a5fc8",
         )
         self.task_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=self.task_listbox.yview)
@@ -243,7 +248,7 @@ class Gui:
             text=" * Total Study Time * ",
             font=Config.font_bold,
             bg=Config.bg_color,
-            fg="blue",
+            fg="#2c3e6b",
             # bd=2,
             # relief=tk.GROOVE,
             # padx=15,
@@ -271,16 +276,16 @@ class Gui:
         )
         gen_btn.pack(side=tk.LEFT)
 
-    def create_results(self):
+    def create_schedule(self):
         """
         Create schedule area
         """
         self.results_frame = tk.LabelFrame(
             self.root,
-            text="  Schedule  ",
+            text=" * Schedule * ",
             font=Config.font_bold,
             bg=Config.bg_color,
-            fg=Config.accent_color,
+            fg="#2c3e6b",
             # bd=2,
             # relief=tk.GROOVE,
             # padx=15,
@@ -294,7 +299,7 @@ class Gui:
         self.results_text = tk.Text(
             self.results_frame,
             yscrollcommand=scrollbar.set,
-            font=Config.font_normal,
+            font=("Courier", 13),
             bg="#f0f4f8",
             fg=Config.text_color,
             relief=tk.FLAT,
@@ -307,15 +312,15 @@ class Gui:
         scrollbar.config(command=self.results_text.yview)
 
         # default text
-        self._set_results_text("Your schedule will appear here after you add tasks.")
+        self._set_text("Your schedule will appear here after you add tasks.")
 
     def display_schedule(self, schedule):
         """
         Display generated schedule using formulas
         """
-        lines = ["═-" * 25]
-        lines.append(f"{'ASSIGNMENT':<28} {'STUDY':>8} {'BREAK':>8}  DIFF")
-        lines.append("─" * 50)
+        lines = ["═" * 60]
+        lines.append(f"{'ASSIGNMENT':<28} {'STUDY':>10} {'BREAK':>10}  DIFF")
+        lines.append("─" * 60)
 
         total_study = 0
         total_break = 0
@@ -331,12 +336,12 @@ class Gui:
             visual = "█" * diff + "░" * (5 - diff)
             lines.append(f"{name:<28} {study:>6} min {break_time:>6} min  {visual}")
 
-        lines.append("─" * 50)
+        lines.append("─" * 60)
         lines.append(f"{'TOTALS':<28} {total_study:>6} min {total_break:>6} min")
-        lines.append("═" * 50)
+        lines.append("═" * 60)
         lines.append("")
 
-        self._set_results_text("\n".join(lines))
+        self._set_text("\n".join(lines))
 
     def add_task_button(self):
         """
@@ -367,7 +372,7 @@ class Gui:
         self.task_listbox.delete(0, tk.END)
         self.update_task_count()
         self.time_entry.delete(0, tk.END)
-        self._set_results_text("Your schedule will appear here after you add tasks.")
+        self._set_text("Your schedule will appear here after you add tasks.")
 
     def schedule_button(self):
         """
@@ -395,3 +400,9 @@ class Gui:
         count = self.exp.get_task_count()
         noun = "task" if count == 1 else "tasks"
         self.task_count_label.config(text=f"Tasks added: {count} {noun}")
+
+    def _set_text(self, text):
+        self.results_text.config(state=tk.NORMAL)
+        self.results_text.delete("1.0", tk.END)
+        self.results_text.insert(tk.END, text)
+        self.results_text.config(state=tk.DISABLED)
