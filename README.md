@@ -30,14 +30,15 @@ The program then splits the available time into study blocks and break blocks, g
 ```
 time-manager/
 ├── README.md
-├── run_experiment.py        # entry point, launches the GUI
+├── run_experiment.py          # entry point, launches the GUI
 ├── config/
-│   └── config.py            # window size, colors, fonts
+│   └── config.py              # window size, colors, fonts
 ├── src/
-│   ├── exp.py               # Exp class: task storage + scheduling logic
-│   └── gui.py               # Gui class: tkinter window + event handlers
+│   ├── exp.py                 # Exp class: task storage + scheduling logic
+│   └── gui.py                 # Gui class: tkinter window + event handlers
 └── tests/
-    └── test_exp.py          # unit tests for the Exp class
+    └── test_exp.py            # unit tests for the Exp class
+    └── testing_procedure.txt  # testing procedure (written out)
 ```
 
 ## **Installation**:
